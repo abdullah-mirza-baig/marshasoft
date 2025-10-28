@@ -63,9 +63,11 @@
    */
   const preloader = document.querySelector('#preloader');
   if (preloader) {
-    window.addEventListener('load', () => {
-      preloader.remove();
-    });
+   window.addEventListener("load", () => {
+  setTimeout(() => {
+    document.getElementById('preloader').style.display = 'none';
+  }, 1500); // hide after 1.5s
+});
   }
 
   /**
@@ -244,6 +246,9 @@ const services = {
         <li><i class="bi bi-check-circle"></i> <span>SEO-friendly and scalable</span></li>
         <li><i class="bi bi-check-circle"></i> <span>Customized to your business goals</span></li>
       </ul>
+      <div class="btn-wrapper-cart">
+          <a href="">Add To Cart</a>
+      </div>
     `
   },
   app: {
@@ -258,6 +263,9 @@ const services = {
         <li><i class="bi bi-check-circle"></i> <span>Cross-platform compatibility</span></li>
         <li><i class="bi bi-check-circle"></i> <span>Secure and easy to maintain</span></li>
       </ul>
+      <div class="btn-wrapper-cart">
+          <a href="">Add To Cart</a>
+        </div>
     `
   },
   smm: {
@@ -272,6 +280,9 @@ const services = {
         <li><i class="bi bi-check-circle"></i> <span>Analytics and performance reporting</span></li>
         <li><i class="bi bi-check-circle"></i> <span>Paid ad campaign setup & optimization</span></li>
       </ul>
+      <div class="btn-wrapper-cart">
+          <a href="">Add To Cart</a>
+        </div>
     `
   },
   seo: {
@@ -286,6 +297,9 @@ const services = {
         <li><i class="bi bi-check-circle"></i> <span>Technical SEO audits</span></li>
         <li><i class="bi bi-check-circle"></i> <span>Content strategy & keyword targeting</span></li>
       </ul>
+      <div class="btn-wrapper-cart">
+          <a href="">Add To Cart</a>
+        </div>
     `
   },
   ads: {
@@ -300,6 +314,9 @@ const services = {
         <li><i class="bi bi-check-circle"></i> <span>Conversion tracking & reporting</span></li>
         <li><i class="bi bi-check-circle"></i> <span>A/B testing and campaign scaling</span></li>
       </ul>
+      <div class="btn-wrapper-cart">
+          <a href="">Add To Cart</a>
+        </div>
     `
   },
   saas: {
@@ -314,6 +331,9 @@ const services = {
         <li><i class="bi bi-check-circle"></i> <span>Custom dashboards and APIs</span></li>
         <li><i class="bi bi-check-circle"></i> <span>Ongoing maintenance & updates</span></li>
       </ul>
+      <div class="btn-wrapper-cart">
+          <a href="">Add To Cart</a>
+        </div>
     `
   },
   chatbot: {
@@ -328,6 +348,9 @@ const services = {
         <li><i class="bi bi-check-circle"></i> <span>Live agent handoff options</span></li>
         <li><i class="bi bi-check-circle"></i> <span>Multilingual and platform-ready</span></li>
       </ul>
+      <div class="btn-wrapper-cart">
+          <a href="">Add To Cart</a>
+        </div>
     `
   }
 };
@@ -421,4 +444,67 @@ document.addEventListener("DOMContentLoaded", function () {
     const target = document.getElementById(id);
     if (target) target.click();
   });
+});
+
+// document.getElementById("contact-form").addEventListener("submit", function(e) {
+//   e.preventDefault();
+
+//   const form = e.target;
+//   const formData = new FormData(form);
+
+//   form.querySelector(".loading").style.display = "block";
+//   form.querySelector(".error-message").style.display = "none";
+//   form.querySelector(".sent-message").style.display = "none";
+
+//   fetch("https://formsubmit.co/marshasoftllc@gmail.com", {
+//     method: "POST",
+//     body: formData
+//   })
+//   .then(response => {
+//     form.querySelector(".loading").style.display = "none";
+//     if (response.ok) {
+//       form.querySelector(".sent-message").style.display = "block";
+//       form.reset();
+//     } else {
+//       form.querySelector(".error-message").innerText = "Something went wrong. Try again!";
+//       form.querySelector(".error-message").style.display = "block";
+//     }
+//   })
+//   .catch(error => {
+//     form.querySelector(".loading").style.display = "none";
+//     form.querySelector(".error-message").innerText = "Failed to send. Check connection!";
+//     form.querySelector(".error-message").style.display = "block";
+//   });
+// });
+
+document.getElementById("contact-form").addEventListener("submit", async function(e) {
+  e.preventDefault();
+
+  const form = e.target;
+  const loading = form.querySelector(".loading");
+  const success = form.querySelector(".sent-message");
+
+  loading.style.display = "block";
+  success.style.display = "none";
+
+  try {
+    const response = await fetch(form.action, {
+      method: form.method,
+      body: new FormData(form)
+    });
+
+    if (response.ok) {
+      success.style.display = "block";
+      form.reset();
+       setTimeout(() => {
+        success.style.display = "none";
+      }, 3000);
+    } else {
+      alert("Something went wrong. Please try again!");
+    }
+  } catch (error) {
+    alert("Error: " + error.message);
+  } finally {
+    loading.style.display = "none";
+  }
 });
